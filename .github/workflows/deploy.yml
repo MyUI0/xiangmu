@@ -66,6 +66,16 @@ jobs:
                 echo "  ✓ 更新 package.json"
               fi
               
+              # 删除旧的 lock 文件，让 npm install 重新生成
+              if [ -f "$project/package-lock.json" ]; then
+                rm "$project/package-lock.json"
+                echo "  ✓ 删除旧 package-lock.json"
+              fi
+              if [ -d "$project/node_modules" ]; then
+                rm -rf "$project/node_modules"
+                echo "  ✓ 删除 node_modules"
+              fi
+              
               if [ ! -f "$project/tailwind.config.js" ] && [ -f "$project/package.json" ]; then
                 echo '/** @type {import('"'"'tailwindcss'"'"').Config} */' > "$project/tailwind.config.js"
                 echo 'export default {' >> "$project/tailwind.config.js"
@@ -118,7 +128,7 @@ jobs:
       - name: Build speech-synthesis
         working-directory: ai-projects/speech-synthesis
         run: |
-          npm ci
+          npm install
           npx vite build --base /projects/speech-synthesis/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/speech-synthesis
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/speech-synthesis/
@@ -126,7 +136,7 @@ jobs:
       - name: Build image-recognition
         working-directory: ai-projects/image-recognition
         run: |
-          npm ci
+          npm install
           npx vite build --base /projects/image-recognition/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/image-recognition
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/image-recognition/
@@ -134,7 +144,7 @@ jobs:
       - name: Build qa-interface
         working-directory: ai-projects/qa-interface
         run: |
-          npm ci
+          npm install
           npx vite build --base /projects/qa-interface/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/qa-interface
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/qa-interface/
@@ -142,7 +152,7 @@ jobs:
       - name: Build recommendation-interface
         working-directory: ai-projects/recommendation-interface
         run: |
-          npm ci
+          npm install
           npx vite build --base /projects/recommendation-interface/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/recommendation-interface
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/recommendation-interface/
@@ -150,7 +160,7 @@ jobs:
       - name: Build dashboard
         working-directory: data-visualization/dashboard
         run: |
-          npm ci
+          npm install
           npx vite build --base /projects/dashboard/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/dashboard
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/dashboard/
@@ -158,7 +168,7 @@ jobs:
       - name: Build real-time-monitor
         working-directory: data-visualization/real-time-monitor
         run: |
-          npm ci
+          npm install
           npx vite build --base /projects/real-time-monitor/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/real-time-monitor
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/real-time-monitor/
@@ -166,7 +176,7 @@ jobs:
       - name: Build react-components
         working-directory: ui-libs/react-components
         run: |
-          npm ci
+          npm install
           npx vite build --base /projects/react-components/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/react-components
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/react-components/
@@ -174,7 +184,9 @@ jobs:
       - name: Build vue-components
         working-directory: ui-libs/vue-components
         run: |
-          pnpm install --frozen-lockfile
+          rm -f pnpm-lock.yaml
+          rm -rf node_modules
+          pnpm install
           npx vite build --base /projects/vue-components/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/vue-components
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/vue-components/
@@ -182,7 +194,7 @@ jobs:
       - name: Build blog-dashboard
         working-directory: web-frontend/blog-dashboard/frontend
         run: |
-          npm ci
+          npm install
           npx vite build --base /projects/blog-dashboard/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/blog-dashboard
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/blog-dashboard/
@@ -190,7 +202,7 @@ jobs:
       - name: Build e-commerce
         working-directory: web-frontend/e-commerce
         run: |
-          npm ci
+          npm install
           npx vite build --base /projects/e-commerce/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/e-commerce
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/e-commerce/
@@ -198,7 +210,9 @@ jobs:
       - name: Build weather-app
         working-directory: web-frontend/weather-app
         run: |
-          pnpm install --frozen-lockfile
+          rm -f pnpm-lock.yaml
+          rm -rf node_modules
+          pnpm install
           npx vite build --base /projects/weather-app/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/weather-app
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/weather-app/
@@ -206,7 +220,7 @@ jobs:
       - name: Build task-manager
         working-directory: web-frontend/task-manager
         run: |
-          npm ci
+          npm install
           npx vite build --base /projects/task-manager/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/task-manager
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/task-manager/
@@ -214,7 +228,7 @@ jobs:
       - name: Build 2048-game
         working-directory: games/2048-game
         run: |
-          npm ci
+          npm install
           npx vite build --base /projects/2048-game/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/2048-game
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/2048-game/
@@ -222,7 +236,7 @@ jobs:
       - name: Build electron-notepad
         working-directory: desktop-apps/electron-notepad
         run: |
-          npm ci
+          npm install
           npx vite build --base /projects/notepad/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/notepad
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/notepad/
