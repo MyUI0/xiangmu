@@ -34,7 +34,7 @@ jobs:
       - name: Install corepack
         run: corepack enable
 
-      # ========== 修复 Tailwind CSS 配置 ==========
+      # ========== 修复 Tailwind CSS 配置（所有项目）==========
       - name: Fix Tailwind CSS Configuration
         run: |
           echo "🔧 修复 Tailwind CSS 配置..."
@@ -48,6 +48,7 @@ jobs:
             "data-visualization/real-time-monitor"
             "ui-libs/react-components"
             "ui-libs/vue-components"
+            "web-frontend/blog-dashboard/frontend"
             "web-frontend/e-commerce"
             "web-frontend/weather-app"
             "web-frontend/task-manager"
@@ -124,13 +125,14 @@ jobs:
         run: |
           mkdir -p dist
           cp docs/index.html dist/index.html
+          echo "✅ 首页已复制"
 
       # ========== 构建 React/Vue 项目 ==========
       - name: Build speech-synthesis
         working-directory: ai-projects/speech-synthesis
         run: |
           npm install
-          npx vite build --base /projects/speech-synthesis/
+          npx vite build --base ./
           mkdir -p $GITHUB_WORKSPACE/dist/projects/speech-synthesis
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/speech-synthesis/
 
@@ -138,7 +140,7 @@ jobs:
         working-directory: ai-projects/image-recognition
         run: |
           npm install
-          npx vite build --base /projects/image-recognition/
+          npx vite build --base ./
           mkdir -p $GITHUB_WORKSPACE/dist/projects/image-recognition
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/image-recognition/
 
@@ -146,7 +148,7 @@ jobs:
         working-directory: ai-projects/qa-interface
         run: |
           npm install
-          npx vite build --base /projects/qa-interface/
+          npx vite build --base ./
           mkdir -p $GITHUB_WORKSPACE/dist/projects/qa-interface
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/qa-interface/
 
@@ -154,7 +156,7 @@ jobs:
         working-directory: ai-projects/recommendation-interface
         run: |
           npm install
-          npx vite build --base /projects/recommendation-interface/
+          npx vite build --base ./
           mkdir -p $GITHUB_WORKSPACE/dist/projects/recommendation-interface
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/recommendation-interface/
 
@@ -162,7 +164,7 @@ jobs:
         working-directory: data-visualization/dashboard
         run: |
           npm install
-          npx vite build --base /projects/dashboard/
+          npx vite build --base ./
           mkdir -p $GITHUB_WORKSPACE/dist/projects/dashboard
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/dashboard/
 
@@ -170,7 +172,7 @@ jobs:
         working-directory: data-visualization/real-time-monitor
         run: |
           npm install
-          npx vite build --base /projects/real-time-monitor/
+          npx vite build --base ./
           mkdir -p $GITHUB_WORKSPACE/dist/projects/real-time-monitor
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/real-time-monitor/
 
@@ -178,7 +180,7 @@ jobs:
         working-directory: ui-libs/react-components
         run: |
           npm install
-          npx vite build --base /projects/react-components/
+          npx vite build --base ./
           mkdir -p $GITHUB_WORKSPACE/dist/projects/react-components
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/react-components/
 
@@ -188,24 +190,23 @@ jobs:
           rm -f pnpm-lock.yaml
           rm -rf node_modules
           pnpm install
-          npx vite build --base /projects/vue-components/
+          npx vite build --base ./
           mkdir -p $GITHUB_WORKSPACE/dist/projects/vue-components
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/vue-components/
 
-      # TODO: blog-dashboard 类型定义有问题，暂时跳过
-      # - name: Build blog-dashboard
-      #   working-directory: web-frontend/blog-dashboard/frontend
-      #   run: |
-      #     npm install
-      #     npx vite build --base /projects/blog-dashboard/
-      #     mkdir -p $GITHUB_WORKSPACE/dist/projects/blog-dashboard
-      #     cp -r dist/* $GITHUB_WORKSPACE/dist/projects/blog-dashboard/
+      - name: Build blog-dashboard
+        working-directory: web-frontend/blog-dashboard/frontend
+        run: |
+          npm install
+          npx vite build --base ./
+          mkdir -p $GITHUB_WORKSPACE/dist/projects/blog-dashboard
+          cp -r dist/* $GITHUB_WORKSPACE/dist/projects/blog-dashboard/
 
       - name: Build e-commerce
         working-directory: web-frontend/e-commerce
         run: |
           npm install
-          npx vite build --base /projects/e-commerce/
+          npx vite build --base ./
           mkdir -p $GITHUB_WORKSPACE/dist/projects/e-commerce
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/e-commerce/
 
@@ -215,7 +216,7 @@ jobs:
           rm -f pnpm-lock.yaml
           rm -rf node_modules
           pnpm install
-          npx vite build --base /projects/weather-app/
+          npx vite build --base ./
           mkdir -p $GITHUB_WORKSPACE/dist/projects/weather-app
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/weather-app/
 
@@ -223,7 +224,7 @@ jobs:
         working-directory: web-frontend/task-manager
         run: |
           npm install
-          npx vite build --base /projects/task-manager/
+          npx vite build --base ./
           mkdir -p $GITHUB_WORKSPACE/dist/projects/task-manager
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/task-manager/
 
@@ -231,7 +232,7 @@ jobs:
         working-directory: games/2048-game
         run: |
           npm install
-          npx vite build --base /projects/2048-game/
+          npx vite build --base ./
           mkdir -p $GITHUB_WORKSPACE/dist/projects/2048-game
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/2048-game/
 
@@ -239,30 +240,48 @@ jobs:
         working-directory: desktop-apps/electron-notepad
         run: |
           npm install
-          npx vite build --base /projects/notepad/
+          npx vite build --base ./
           mkdir -p $GITHUB_WORKSPACE/dist/projects/notepad
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/notepad/
 
       # ========== 复制纯静态项目 ==========
-      - name: Copy portfolio
+      - name: Copy static projects
         run: |
           mkdir -p dist/projects/portfolio
           cp -r web-frontend/portfolio/* dist/projects/portfolio/
-
-      - name: Copy pretext-demo
-        run: |
+          
           mkdir -p dist/projects/pretext-demo
           cp -r web-frontend/pretext-demo/* dist/projects/pretext-demo/
-
-      - name: Copy snake-game
-        run: |
+          
           mkdir -p dist/projects/snake-game
           cp -r games/snake-game/* dist/projects/snake-game/
-
-      - name: Copy docker-manager-frontend
-        run: |
+          
           mkdir -p dist/projects/docker-manager
           cp -r linux-ops/docker-manager/frontend/* dist/projects/docker-manager/
+          
+          echo "✅ 静态项目复制完成"
+
+      # ========== 调试：检查 dist 目录内容 ==========
+      - name: Debug dist directory
+        run: |
+          echo "📁 dist 目录结构:"
+          ls -la dist/
+          echo ""
+          echo "📁 dist/projects 目录结构:"
+          ls -la dist/projects/
+          echo ""
+          echo "📄 检查每个项目的 index.html:"
+          for dir in dist/projects/*/; do
+            if [ -f "$dir/index.html" ]; then
+              echo "  ✓ $dir/index.html 存在"
+              echo "    文件大小: $(stat -c%s "$dir/index.html") bytes"
+            else
+              echo "  ✗ $dir/index.html 缺失"
+            fi
+          done
+          echo ""
+          echo "🔍 检查 speech-synthesis 的 index.html 内容:"
+          cat dist/projects/speech-synthesis/index.html | head -20 || echo "文件不存在"
 
       # ========== 上传 Pages 制品 ==========
       - name: Upload artifact
