@@ -34,6 +34,64 @@ jobs:
       - name: Install corepack
         run: corepack enable
 
+      # ========== 修复 blog-dashboard 类型定义（必须在 Tailwind 修复之前）==========
+      - name: Fix blog-dashboard types
+        run: |
+          echo "🔧 修复 blog-dashboard 类型定义..."
+          
+          TYPES_FILE="web-frontend/blog-dashboard/frontend/src/types/index.ts"
+          
+          # 直接创建完整的类型定义文件
+          cat > "$TYPES_FILE" << 'TYPESEOF'
+          export interface Article {
+            id: string;
+            title: string;
+            content: string;
+            category: string;
+            status: 'draft' | 'published';
+            createdAt: string;
+            updatedAt: string;
+            views: number;
+            likes: number;
+          }
+
+          export interface Statistics {
+            totalArticles: number;
+            publishedArticles: number;
+            draftArticles: number;
+            totalViews: number;
+            totalLikes: number;
+          }
+
+          export interface TrendData {
+            date: string;
+            views: number;
+            likes: number;
+          }
+
+          export interface CategoryData {
+            name: string;
+            count: number;
+          }
+
+          export interface User {
+            id: string;
+            username: string;
+            avatar: string;
+          }
+
+          export interface Notification {
+            id: string;
+            title: string;
+            message: string;
+            read: boolean;
+            createdAt: string;
+          }
+          TYPESEOF
+          
+          echo "✅ blog-dashboard 类型定义已更新！"
+          cat "$TYPES_FILE"
+
       # ========== 修复 Tailwind CSS 配置 ==========
       - name: Fix Tailwind CSS Configuration
         run: |
@@ -76,105 +134,52 @@ jobs:
               fi
               
               if [ ! -f "$project/tailwind.config.js" ] && [ -f "$project/package.json" ]; then
-                echo '/** @type {import('"'"'tailwindcss'"'"').Config} */' > "$project/tailwind.config.js"
-                echo 'export default {' >> "$project/tailwind.config.js"
-                echo '  content: [' >> "$project/tailwind.config.js"
-                echo '    "./index.html",' >> "$project/tailwind.config.js"
-                echo '    "./src/**/*.{js,ts,jsx,tsx}",' >> "$project/tailwind.config.js"
-                echo '  ],' >> "$project/tailwind.config.js"
-                echo '  theme: {' >> "$project/tailwind.config.js"
-                echo '    extend: {},' >> "$project/tailwind.config.js"
-                echo '  },' >> "$project/tailwind.config.js"
-                echo '  plugins: [],' >> "$project/tailwind.config.js"
-                echo '}' >> "$project/tailwind.config.js"
+                cat > "$project/tailwind.config.js" << 'TAILWINDEOF'
+          /** @type {import('tailwindcss').Config} */
+          export default {
+            content: [
+              "./index.html",
+              "./src/**/*.{js,ts,jsx,tsx}",
+            ],
+            theme: {
+              extend: {},
+            },
+            plugins: [],
+          }
+          TAILWINDEOF
                 echo "  ✓ 创建 tailwind.config.js"
               fi
               
               if [ -f "$project/src/index.css" ]; then
                 if grep -q '@import "tailwindcss"' "$project/src/index.css"; then
-                  echo '@tailwind base;' > "$project/src/index.css"
-                  echo '@tailwind components;' >> "$project/src/index.css"
-                  echo '@tailwind utilities;' >> "$project/src/index.css"
-                  echo '' >> "$project/src/index.css"
-                  echo 'body {' >> "$project/src/index.css"
-                  echo "  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;" >> "$project/src/index.css"
-                  echo '}' >> "$project/src/index.css"
+                  cat > "$project/src/index.css" << 'CSSEOF'
+          @tailwind base;
+          @tailwind components;
+          @tailwind utilities;
+
+          body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          }
+          CSSEOF
                   echo "  ✓ 更新 src/index.css"
                 fi
               fi
               
               if [ -f "$project/postcss.config.js" ]; then
-                echo 'export default {' > "$project/postcss.config.js"
-                echo '  plugins: {' >> "$project/postcss.config.js"
-                echo '    tailwindcss: {},' >> "$project/postcss.config.js"
-                echo '    autoprefixer: {},' >> "$project/postcss.config.js"
-                echo '  },' >> "$project/postcss.config.js"
-                echo '}' >> "$project/postcss.config.js"
+                cat > "$project/postcss.config.js" << 'POSTCSSEOF'
+          export default {
+            plugins: {
+              tailwindcss: {},
+              autoprefixer: {},
+            },
+          }
+          POSTCSSEOF
                 echo "  ✓ 更新 postcss.config.js"
               fi
             fi
           done
           
           echo "✅ Tailwind CSS 配置修复完成！"
-
-      # ========== 修复 blog-dashboard 类型定义 ==========
-      - name: Fix blog-dashboard types
-        run: |
-          echo "🔧 修复 blog-dashboard 类型定义..."
-          
-          TYPES_FILE="web-frontend/blog-dashboard/frontend/src/types/index.ts"
-          
-          if [ -f "$TYPES_FILE" ]; then
-            # 检查是否缺少 Article 类型
-            if ! grep -q "export interface Article" "$TYPES_FILE"; then
-              echo "" >> "$TYPES_FILE"
-              echo "export interface Article {" >> "$TYPES_FILE"
-              echo "  id: string;" >> "$TYPES_FILE"
-              echo "  title: string;" >> "$TYPES_FILE"
-              echo "  content: string;" >> "$TYPES_FILE"
-              echo "  category: string;" >> "$TYPES_FILE"
-              echo "  status: 'draft' | 'published';" >> "$TYPES_FILE"
-              echo "  createdAt: string;" >> "$TYPES_FILE"
-              echo "  updatedAt: string;" >> "$TYPES_FILE"
-              echo "  views: number;" >> "$TYPES_FILE"
-              echo "  likes: number;" >> "$TYPES_FILE"
-              echo "}" >> "$TYPES_FILE"
-              echo "  ✓ 添加 Article 类型"
-            fi
-            
-            if ! grep -q "export interface Statistics" "$TYPES_FILE"; then
-              echo "" >> "$TYPES_FILE"
-              echo "export interface Statistics {" >> "$TYPES_FILE"
-              echo "  totalArticles: number;" >> "$TYPES_FILE"
-              echo "  publishedArticles: number;" >> "$TYPES_FILE"
-              echo "  draftArticles: number;" >> "$TYPES_FILE"
-              echo "  totalViews: number;" >> "$TYPES_FILE"
-              echo "  totalLikes: number;" >> "$TYPES_FILE"
-              echo "}" >> "$TYPES_FILE"
-              echo "  ✓ 添加 Statistics 类型"
-            fi
-            
-            if ! grep -q "export interface TrendData" "$TYPES_FILE"; then
-              echo "" >> "$TYPES_FILE"
-              echo "export interface TrendData {" >> "$TYPES_FILE"
-              echo "  date: string;" >> "$TYPES_FILE"
-              echo "  views: number;" >> "$TYPES_FILE"
-              echo "  likes: number;" >> "$TYPES_FILE"
-              echo "}" >> "$TYPES_FILE"
-              echo "  ✓ 添加 TrendData 类型"
-            fi
-            
-            if ! grep -q "export interface CategoryData" "$TYPES_FILE"; then
-              echo "" >> "$TYPES_FILE"
-              echo "export interface CategoryData {" >> "$TYPES_FILE"
-              echo "  name: string;" >> "$TYPES_FILE"
-              echo "  count: number;" >> "$TYPES_FILE"
-              echo "}" >> "$TYPES_FILE"
-              echo "  ✓ 添加 CategoryData 类型"
-            fi
-            
-            echo "✅ blog-dashboard 类型定义修复完成！"
-          fi
 
       # ========== 构建首页 ==========
       - name: Build homepage
