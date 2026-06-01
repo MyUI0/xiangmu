@@ -28,25 +28,6 @@
       color: #94a3b8;
       font-size: 1.1rem;
     }
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 32px;
-      margin-top: 24px;
-      flex-wrap: wrap;
-    }
-    .stats .stat {
-      text-align: center;
-    }
-    .stats .stat-num {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #60a5fa;
-    }
-    .stats .stat-label {
-      font-size: 0.85rem;
-      color: #64748b;
-    }
     .container {
       max-width: 1200px;
       margin: 0 auto;
@@ -116,11 +97,7 @@
     .tag-node { background: #1e3a3a; color: #2dd4bf; }
     .tag-electron { background: #3a2f1e; color: #fb923c; }
     .tag-mini { background: #1e2f3a; color: #38bdf8; }
-    .tag-new {
-      background: linear-gradient(135deg, #1e3a2f, #1e2f3a);
-      color: #4ade80;
-      border: 1px solid #4ade8033;
-    }
+    .tag-docs { background: #334155; color: #94a3b8; }
     .card.disabled {
       opacity: 0.5;
       cursor: default;
@@ -146,20 +123,6 @@
   <div class="hero">
     <h1>项目资源库</h1>
     <p>涵盖前端开发、运维工具、AI应用、游戏等多个领域的项目集合</p>
-    <div class="stats">
-      <div class="stat">
-        <div class="stat-num">24</div>
-        <div class="stat-label">总项目数</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">18</div>
-        <div class="stat-label">可在线预览</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">6</div>
-        <div class="stat-label">本次新增</div>
-      </div>
-    </div>
   </div>
 
   <div class="container">
@@ -168,29 +131,29 @@
     <div class="category">
       <h2 class="category-title">🤖 AI 项目</h2>
       <div class="grid">
-        <a class="card" href="/projects/speech-synthesis/">
+        <a class="card" href="/xiangmu/projects/speech-synthesis/">
           <div class="card-icon">🎙️</div>
           <h3>语音合成应用</h3>
           <p>Web Speech API 语音合成，波形可视化，音色/语速/音量调节</p>
           <span class="card-tag tag-react">React + TypeScript</span>
         </a>
-        <a class="card" href="/projects/image-recognition/">
+        <a class="card" href="/xiangmu/projects/image-recognition/">
           <div class="card-icon">🖼️</div>
           <h3>图像识别界面</h3>
           <p>图片上传预览，模拟图像识别，识别结果与置信度展示</p>
           <span class="card-tag tag-react">React + TypeScript</span>
         </a>
-        <a class="card" href="/projects/qa-interface/">
+        <a class="card" href="/xiangmu/projects/qa-interface/">
           <div class="card-icon">💬</div>
           <h3>智能问答界面</h3>
-          <p>气泡式对话界面，流式打字效果，历史记录管理，主题切换</p>
-          <span class="card-tag tag-new">🆕 React 19</span>
+          <p>气泡式对话，流式打字效果，对话历史管理</p>
+          <span class="card-tag tag-react">React + TypeScript</span>
         </a>
-        <a class="card" href="/projects/recommendation-interface/">
+        <a class="card" href="/xiangmu/projects/recommendation-interface/">
           <div class="card-icon">🎯</div>
           <h3>推荐系统界面</h3>
-          <p>个性化内容推荐，分类导航，收藏管理，骨架屏加载，响应式网格</p>
-          <span class="card-tag tag-new">🆕 React 19</span>
+          <p>个性化内容推荐，分类导航，收藏管理</p>
+          <span class="card-tag tag-react">React + TypeScript</span>
         </a>
       </div>
     </div>
@@ -199,17 +162,17 @@
     <div class="category">
       <h2 class="category-title">📊 数据可视化</h2>
       <div class="grid">
-        <a class="card" href="/projects/dashboard/">
+        <a class="card" href="/xiangmu/projects/dashboard/">
           <div class="card-icon">📈</div>
           <h3>数据仪表盘</h3>
           <p>多种图表类型（折线图、柱状图、饼图、雷达图），统计卡片</p>
           <span class="card-tag tag-react">React + Chart.js</span>
         </a>
-        <a class="card" href="/projects/real-time-monitor/">
+        <a class="card" href="/xiangmu/projects/real-time-monitor/">
           <div class="card-icon">📡</div>
           <h3>实时数据监控</h3>
-          <p>CPU/内存/网络/温度实时监控，Chart.js 实时图表，报警管理，深色主题</p>
-          <span class="card-tag tag-new">🆕 React 19</span>
+          <p>实时指标监控，报警管理，深色主题</p>
+          <span class="card-tag tag-react">React + Chart.js</span>
         </a>
       </div>
     </div>
@@ -218,17 +181,17 @@
     <div class="category">
       <h2 class="category-title">🎮 游戏项目</h2>
       <div class="grid">
-        <a class="card" href="/projects/snake-game/">
+        <a class="card" href="/xiangmu/projects/snake-game/">
           <div class="card-icon">🐍</div>
           <h3>贪吃蛇游戏</h3>
           <p>Canvas 霓虹效果渲染，Web Audio API 音效，排行榜系统</p>
           <span class="card-tag tag-static">HTML + Canvas</span>
         </a>
-        <a class="card" href="/projects/2048-game/">
+        <a class="card" href="/xiangmu/projects/2048-game/">
           <div class="card-icon">🔢</div>
           <h3>2048 游戏</h3>
-          <p>经典数字合并游戏，4种主题切换，键盘+触摸操作，Framer Motion 动画</p>
-          <span class="card-tag tag-new">🆕 React 19</span>
+          <p>经典数字合并游戏，4种主题，键盘+触摸操作</p>
+          <span class="card-tag tag-react">React + TypeScript</span>
         </a>
       </div>
     </div>
@@ -237,41 +200,41 @@
     <div class="category">
       <h2 class="category-title">🌐 前端应用</h2>
       <div class="grid">
-        <a class="card" href="/projects/e-commerce/">
+        <a class="card" href="/xiangmu/projects/e-commerce/">
           <div class="card-icon">🛒</div>
           <h3>电商平台</h3>
           <p>商品展示分类，搜索筛选，购物车管理，响应式设计</p>
           <span class="card-tag tag-react">React + TypeScript</span>
         </a>
-        <a class="card" href="/projects/blog-dashboard/">
+        <a class="card disabled" href="#">
           <div class="card-icon">📝</div>
           <h3>博客管理后台</h3>
-          <p>文章管理（发布/编辑/删除），分类管理，数据统计图表</p>
+          <p>构建失败，暂时不可访问</p>
           <span class="card-tag tag-react">React + Flask</span>
         </a>
-        <a class="card" href="/projects/weather-app/">
+        <a class="card" href="/xiangmu/projects/weather-app/">
           <div class="card-icon">🌤️</div>
           <h3>天气查询应用</h3>
           <p>真实天气 API，城市搜索定位，7日预报，天气动画背景</p>
           <span class="card-tag tag-react">React + TypeScript</span>
         </a>
-        <a class="card" href="/projects/portfolio/">
+        <a class="card" href="/xiangmu/projects/portfolio/">
           <div class="card-icon">👤</div>
           <h3>个人作品集</h3>
           <p>精美个人展示，响应式设计，动画和交互效果</p>
           <span class="card-tag tag-static">HTML + CSS + JS</span>
         </a>
-        <a class="card" href="/projects/pretext-demo/">
+        <a class="card" href="/xiangmu/projects/pretext-demo/">
           <div class="card-icon">📄</div>
           <h3>Pretext 演示</h3>
           <p>现代文档展示，主题切换，响应式设计</p>
           <span class="card-tag tag-static">HTML + CSS + JS</span>
         </a>
-        <a class="card" href="/projects/task-manager/">
+        <a class="card" href="/xiangmu/projects/task-manager/">
           <div class="card-icon">✅</div>
           <h3>任务管理器</h3>
-          <p>拖拽排序，筛选管理，Framer Motion 动画，主题切换，数据持久化</p>
-          <span class="card-tag tag-new">🆕 React 19</span>
+          <p>任务增删改查，拖拽排序，筛选管理</p>
+          <span class="card-tag tag-react">React + TypeScript</span>
         </a>
       </div>
     </div>
@@ -280,13 +243,13 @@
     <div class="category">
       <h2 class="category-title">🎨 UI 组件库</h2>
       <div class="grid">
-        <a class="card" href="/projects/react-components/">
+        <a class="card" href="/xiangmu/projects/react-components/">
           <div class="card-icon">⚛️</div>
           <h3>React 组件库</h3>
           <p>Button, Input, Card, Badge, Tag, Empty, Modal 等组件</p>
           <span class="card-tag tag-react">React + TypeScript</span>
         </a>
-        <a class="card" href="/projects/vue-components/">
+        <a class="card" href="/xiangmu/projects/vue-components/">
           <div class="card-icon">💚</div>
           <h3>Vue 组件库</h3>
           <p>MyButton, MyInput 等表单组件和展示组件</p>
@@ -295,30 +258,11 @@
       </div>
     </div>
 
-    <!-- 桌面应用 -->
-    <div class="category">
-      <h2 class="category-title">💻 桌面应用</h2>
-      <div class="grid">
-        <a class="card" href="/projects/notepad/">
-          <div class="card-icon">📝</div>
-          <h3>记事本</h3>
-          <p>富文本编辑器，笔记管理，自动保存，导出 TXT/HTML，多主题</p>
-          <span class="card-tag tag-new">🆕 React 19</span>
-        </a>
-        <div class="card disabled">
-          <div class="card-icon">🖼️</div>
-          <h3>Electron 图片查看器</h3>
-          <p>桌面应用，无法部署到 GitHub Pages</p>
-          <span class="card-tag tag-electron">Electron</span>
-        </div>
-      </div>
-    </div>
-
     <!-- Linux 运维工具 -->
     <div class="category">
       <h2 class="category-title">🐧 Linux 运维工具</h2>
       <div class="grid">
-        <a class="card" href="/projects/docker-manager/">
+        <a class="card" href="/xiangmu/projects/docker-manager/">
           <div class="card-icon">🐳</div>
           <h3>Docker 管理平台</h3>
           <p>容器管理（启动/停止/重启/删除），镜像列表，Web 界面</p>
@@ -327,20 +271,39 @@
         <div class="card disabled">
           <div class="card-icon">📡</div>
           <h3>服务器监控系统</h3>
-          <p>Flask 后端项目，需服务器运行</p>
+          <p>Flask 后端项目，需服务器运行，无法部署到 GitHub Pages</p>
           <span class="card-tag tag-python">Python + Flask</span>
         </div>
         <div class="card disabled">
           <div class="card-icon">📋</div>
           <h3>日志分析平台</h3>
-          <p>Flask 后端项目，需服务器运行</p>
+          <p>Flask 后端项目，需服务器运行，无法部署到 GitHub Pages</p>
           <span class="card-tag tag-python">Python + Flask</span>
         </div>
         <div class="card disabled">
           <div class="card-icon">🚀</div>
           <h3>自动部署工具</h3>
-          <p>Flask 后端项目，需服务器运行</p>
+          <p>Flask 后端项目，需服务器运行，无法部署到 GitHub Pages</p>
           <span class="card-tag tag-python">Python + Flask</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 桌面应用 -->
+    <div class="category">
+      <h2 class="category-title">💻 桌面应用</h2>
+      <div class="grid">
+        <a class="card" href="/xiangmu/projects/notepad/">
+          <div class="card-icon">📝</div>
+          <h3>记事本</h3>
+          <p>富文本编辑，自动保存，导出 TXT/HTML</p>
+          <span class="card-tag tag-react">React + TypeScript</span>
+        </a>
+        <div class="card disabled">
+          <div class="card-icon">🖼️</div>
+          <h3>Electron 图片查看器</h3>
+          <p>桌面应用，无法部署到 GitHub Pages</p>
+          <span class="card-tag tag-electron">Electron</span>
         </div>
       </div>
     </div>
@@ -367,7 +330,7 @@
   </div>
 
   <div class="footer">
-    <p>项目资源库 &copy; 2026 · 共 24 个项目 · 18 个可在线预览 · 6 个新增</p>
+    <p>项目资源库 &copy; 2026 · 共 24 个项目 · 17 个可在线预览</p>
   </div>
 </body>
 </html>
