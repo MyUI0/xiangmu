@@ -1,0 +1,36 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/add/add",
+    "pages/stats/stats"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#667eea",
+    "navigationBarTitleText": "记账助手",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f7fa"
+  },
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#667eea",
+    "backgroundColor": "#fff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "记录"
+      },
+      {
+        "pagePath": "pages/add/add",
+        "text": "记一笔"
+      },
+      {
+        "pagePath": "pages/stats/stats",
+        "text": "统计"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

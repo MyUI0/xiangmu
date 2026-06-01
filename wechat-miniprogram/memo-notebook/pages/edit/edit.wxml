@@ -1,0 +1,40 @@
+<view class="container">
+  <!-- 标题输入 -->
+  <view class="input-section">
+    <input 
+      class="title-input" 
+      placeholder="输入标题..." 
+      value="{{note.title}}" 
+      bindinput="onTitleInput"
+      maxlength="50"
+    />
+  </view>
+
+  <!-- 内容输入 -->
+  <view class="content-section">
+    <textarea 
+      class="content-input" 
+      placeholder="写下你的想法..." 
+      value="{{note.content}}" 
+      bindinput="onContentInput"
+      auto-height
+      maxlength="10000"
+    />
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <button class="btn-save" bindtap="saveNote">保存</button>
+    <button class="btn-delete" wx:if="{{isEdit}}" bindtap="deleteNote">删除</button>
+  </view>
+
+  <!-- 创建时间 -->
+  <view class="time-info" wx:if="{{isEdit}}">
+    <text class="time-label">创建时间：</text>
+    <text class="time-text">{{note.createTime}}</text>
+  </view>
+  <view class="time-info" wx:if="{{isEdit}}">
+    <text class="time-label">更新时间：</text>
+    <text class="time-text">{{note.updateTime}}</text>
+  </view>
+</view>

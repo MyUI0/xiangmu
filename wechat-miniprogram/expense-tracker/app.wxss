@@ -1,0 +1,107 @@
+/* 全局样式 */
+page {
+  background-color: #f5f7fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* 容器 */
+.container {
+  padding: 20rpx;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* 卡片样式 */
+.card {
+  background: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
+  margin-bottom: 20rpx;
+  padding: 30rpx;
+}
+
+/* 按钮样式 */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 88rpx;
+  border-radius: 44rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+}
+
+.btn-primary:active {
+  opacity: 0.8;
+}
+
+/* 文本颜色 */
+.text-primary {
+  color: #667eea;
+}
+
+.text-success {
+  color: #10b981;
+}
+
+.text-danger {
+  color: #ef4444;
+}
+
+.text-gray {
+  color: #9ca3af;
+}
+
+/* 间距 */
+.mt-10 {
+  margin-top: 10rpx;
+}
+
+.mt-20 {
+  margin-top: 20rpx;
+}
+
+.mb-10 {
+  margin-bottom: 10rpx;
+}
+
+.mb-20 {
+  margin-bottom: 20rpx;
+}
+
+/*  flex 布局 */
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 阴影 */
+.shadow-sm {
+  box-shadow: 0 1rpx 3rpx rgba(0, 0, 0, 0.1);
+}
+
+.shadow {
+  box-shadow: 0 4rpx 6rpx rgba(0, 0, 0, 0.1);
+}

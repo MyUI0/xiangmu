@@ -1,0 +1,277 @@
+/* 统计页面样式 */
+.container {
+  padding-bottom: 40rpx;
+}
+
+/* 月份选择器 */
+.month-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30rpx 0;
+  background: #fff;
+  margin-bottom: 20rpx;
+}
+
+.month-btn {
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.month-arrow {
+  font-size: 48rpx;
+  color: #667eea;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.month-text {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333;
+  margin: 0 40rpx;
+}
+
+/* 概览卡片 */
+.overview-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 40rpx 30rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.overview-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.overview-label {
+  font-size: 26rpx;
+  color: #999;
+  margin-bottom: 12rpx;
+}
+
+.overview-value {
+  font-size: 36rpx;
+  font-weight: 600;
+}
+
+.overview-value.expense {
+  color: #ef4444;
+}
+
+.overview-value.income {
+  color: #10b981;
+}
+
+.overview-divider {
+  width: 1rpx;
+  height: 80rpx;
+  background: #eee;
+}
+
+/* 统计类型切换 */
+.stats-tabs {
+  display: flex;
+  background: #fff;
+  padding: 10rpx 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.stats-tab {
+  flex: 1;
+  text-align: center;
+  padding: 24rpx 0;
+  font-size: 28rpx;
+  color: #666;
+  position: relative;
+}
+
+.stats-tab.active {
+  color: #667eea;
+  font-weight: 600;
+}
+
+.stats-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50rpx;
+  height: 5rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 3rpx;
+}
+
+/* 分类统计 */
+.category-stats {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80rpx 0;
+}
+
+.empty-icon {
+  font-size: 100rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.category-list {
+  margin-bottom: 30rpx;
+}
+
+.category-stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.category-stat-item:last-child {
+  border-bottom: none;
+}
+
+.category-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.category-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20rpx;
+}
+
+.category-emoji {
+  font-size: 44rpx;
+}
+
+.category-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-name {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.category-percent {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 6rpx;
+}
+
+.category-right {
+  display: flex;
+  align-items: center;
+}
+
+.category-amount {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+/* 进度条 */
+.progress-section {
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #f5f5f5;
+}
+
+.progress-bar {
+  display: flex;
+  height: 20rpx;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+
+.progress-segment {
+  height: 100%;
+  transition: width 0.3s;
+}
+
+/* 趋势图 */
+.trend-section {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+}
+
+.section-header {
+  margin-bottom: 30rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.trend-chart {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 300rpx;
+  padding: 0 10rpx;
+}
+
+.trend-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.trend-bar-wrapper {
+  width: 30rpx;
+  height: 240rpx;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 16rpx;
+}
+
+.trend-bar {
+  width: 100%;
+  border-radius: 4rpx 4rpx 0 0;
+  min-height: 4rpx;
+  transition: height 0.3s;
+}
+
+.trend-day {
+  font-size: 22rpx;
+  color: #999;
+}

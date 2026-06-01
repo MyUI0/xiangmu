@@ -1,0 +1,46 @@
+.container {
+  padding-top: 20rpx;
+}
+
+/* 区域标题样式 */
+.section {
+  background-color: #ffffff;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  padding: 32rpx 32rpx 20rpx;
+  font-size: 28rpx;
+  color: #999999;
+  font-weight: 500;
+}
+
+/* 设置项样式 */
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32rpx;
+  border-top: 1rpx solid #f0f0f0;
+  transition: background-color 0.2s;
+}
+
+.setting-item:active {
+  background-color: #f8f8f8;
+}
+
+.setting-label {
+  font-size: 32rpx;
+  color: #333333;
+}
+
+.setting-value {
+  font-size: 32rpx;
+  color: #666666;
+}
+
+.setting-icon {
+  font-size: 40rpx;
+  color: #999999;
+  line-height: 1;
+}

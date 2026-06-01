@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>项目资源库</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+    }
+    .hero {
+      text-align: center;
+      padding: 60px 20px 40px;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      color: #94a3b8;
+      font-size: 1.1rem;
+    }
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .stats .stat {
+      text-align: center;
+    }
+    .stats .stat-num {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #60a5fa;
+    }
+    .stats .stat-label {
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    .category {
+      margin-bottom: 48px;
+    }
+    .category-title {
+      font-size: 1.4rem;
+      color: #60a5fa;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+      border: 1px solid #334155;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #60a5fa;
+      box-shadow: 0 8px 30px rgba(96, 165, 250, 0.15);
+    }
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+    .card h3 {
+      font-size: 1.1rem;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+    }
+    .card p {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      flex: 1;
+    }
+    .card-tag {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    .tag-react { background: #1e3a5f; color: #60a5fa; }
+    .tag-vue { background: #1e3a2f; color: #4ade80; }
+    .tag-static { background: #3b2f1e; color: #fbbf24; }
+    .tag-python { background: #2f1e3a; color: #c084fc; }
+    .tag-node { background: #1e3a3a; color: #2dd4bf; }
+    .tag-electron { background: #3a2f1e; color: #fb923c; }
+    .tag-mini { background: #1e2f3a; color: #38bdf8; }
+    .tag-new {
+      background: linear-gradient(135deg, #1e3a2f, #1e2f3a);
+      color: #4ade80;
+      border: 1px solid #4ade8033;
+    }
+    .card.disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+    .card.disabled:hover {
+      transform: none;
+      border-color: #334155;
+      box-shadow: none;
+    }
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: #475569;
+      font-size: 0.85rem;
+    }
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 1.8rem; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <h1>项目资源库</h1>
+    <p>涵盖前端开发、运维工具、AI应用、游戏等多个领域的项目集合</p>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">24</div>
+        <div class="stat-label">总项目数</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">18</div>
+        <div class="stat-label">可在线预览</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">6</div>
+        <div class="stat-label">本次新增</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- AI 项目 -->
+    <div class="category">
+      <h2 class="category-title">🤖 AI 项目</h2>
+      <div class="grid">
+        <a class="card" href="/projects/speech-synthesis/">
+          <div class="card-icon">🎙️</div>
+          <h3>语音合成应用</h3>
+          <p>Web Speech API 语音合成，波形可视化，音色/语速/音量调节</p>
+          <span class="card-tag tag-react">React + TypeScript</span>
+        </a>
+        <a class="card" href="/projects/image-recognition/">
+          <div class="card-icon">🖼️</div>
+          <h3>图像识别界面</h3>
+          <p>图片上传预览，模拟图像识别，识别结果与置信度展示</p>
+          <span class="card-tag tag-react">React + TypeScript</span>
+        </a>
+        <a class="card" href="/projects/qa-interface/">
+          <div class="card-icon">💬</div>
+          <h3>智能问答界面</h3>
+          <p>气泡式对话界面，流式打字效果，历史记录管理，主题切换</p>
+          <span class="card-tag tag-new">🆕 React 19</span>
+        </a>
+        <a class="card" href="/projects/recommendation-interface/">
+          <div class="card-icon">🎯</div>
+          <h3>推荐系统界面</h3>
+          <p>个性化内容推荐，分类导航，收藏管理，骨架屏加载，响应式网格</p>
+          <span class="card-tag tag-new">🆕 React 19</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 数据可视化 -->
+    <div class="category">
+      <h2 class="category-title">📊 数据可视化</h2>
+      <div class="grid">
+        <a class="card" href="/projects/dashboard/">
+          <div class="card-icon">📈</div>
+          <h3>数据仪表盘</h3>
+          <p>多种图表类型（折线图、柱状图、饼图、雷达图），统计卡片</p>
+          <span class="card-tag tag-react">React + Chart.js</span>
+        </a>
+        <a class="card" href="/projects/real-time-monitor/">
+          <div class="card-icon">📡</div>
+          <h3>实时数据监控</h3>
+          <p>CPU/内存/网络/温度实时监控，Chart.js 实时图表，报警管理，深色主题</p>
+          <span class="card-tag tag-new">🆕 React 19</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 游戏项目 -->
+    <div class="category">
+      <h2 class="category-title">🎮 游戏项目</h2>
+      <div class="grid">
+        <a class="card" href="/projects/snake-game/">
+          <div class="card-icon">🐍</div>
+          <h3>贪吃蛇游戏</h3>
+          <p>Canvas 霓虹效果渲染，Web Audio API 音效，排行榜系统</p>
+          <span class="card-tag tag-static">HTML + Canvas</span>
+        </a>
+        <a class="card" href="/projects/2048-game/">
+          <div class="card-icon">🔢</div>
+          <h3>2048 游戏</h3>
+          <p>经典数字合并游戏，4种主题切换，键盘+触摸操作，Framer Motion 动画</p>
+          <span class="card-tag tag-new">🆕 React 19</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 前端应用 -->
+    <div class="category">
+      <h2 class="category-title">🌐 前端应用</h2>
+      <div class="grid">
+        <a class="card" href="/projects/e-commerce/">
+          <div class="card-icon">🛒</div>
+          <h3>电商平台</h3>
+          <p>商品展示分类，搜索筛选，购物车管理，响应式设计</p>
+          <span class="card-tag tag-react">React + TypeScript</span>
+        </a>
+        <a class="card" href="/projects/blog-dashboard/">
+          <div class="card-icon">📝</div>
+          <h3>博客管理后台</h3>
+          <p>文章管理（发布/编辑/删除），分类管理，数据统计图表</p>
+          <span class="card-tag tag-react">React + Flask</span>
+        </a>
+        <a class="card" href="/projects/weather-app/">
+          <div class="card-icon">🌤️</div>
+          <h3>天气查询应用</h3>
+          <p>真实天气 API，城市搜索定位，7日预报，天气动画背景</p>
+          <span class="card-tag tag-react">React + TypeScript</span>
+        </a>
+        <a class="card" href="/projects/portfolio/">
+          <div class="card-icon">👤</div>
+          <h3>个人作品集</h3>
+          <p>精美个人展示，响应式设计，动画和交互效果</p>
+          <span class="card-tag tag-static">HTML + CSS + JS</span>
+        </a>
+        <a class="card" href="/projects/pretext-demo/">
+          <div class="card-icon">📄</div>
+          <h3>Pretext 演示</h3>
+          <p>现代文档展示，主题切换，响应式设计</p>
+          <span class="card-tag tag-static">HTML + CSS + JS</span>
+        </a>
+        <a class="card" href="/projects/task-manager/">
+          <div class="card-icon">✅</div>
+          <h3>任务管理器</h3>
+          <p>拖拽排序，筛选管理，Framer Motion 动画，主题切换，数据持久化</p>
+          <span class="card-tag tag-new">🆕 React 19</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- UI 组件库 -->
+    <div class="category">
+      <h2 class="category-title">🎨 UI 组件库</h2>
+      <div class="grid">
+        <a class="card" href="/projects/react-components/">
+          <div class="card-icon">⚛️</div>
+          <h3>React 组件库</h3>
+          <p>Button, Input, Card, Badge, Tag, Empty, Modal 等组件</p>
+          <span class="card-tag tag-react">React + TypeScript</span>
+        </a>
+        <a class="card" href="/projects/vue-components/">
+          <div class="card-icon">💚</div>
+          <h3>Vue 组件库</h3>
+          <p>MyButton, MyInput 等表单组件和展示组件</p>
+          <span class="card-tag tag-vue">Vue 3 + TypeScript</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 桌面应用 -->
+    <div class="category">
+      <h2 class="category-title">💻 桌面应用</h2>
+      <div class="grid">
+        <a class="card" href="/projects/notepad/">
+          <div class="card-icon">📝</div>
+          <h3>记事本</h3>
+          <p>富文本编辑器，笔记管理，自动保存，导出 TXT/HTML，多主题</p>
+          <span class="card-tag tag-new">🆕 React 19</span>
+        </a>
+        <div class="card disabled">
+          <div class="card-icon">🖼️</div>
+          <h3>Electron 图片查看器</h3>
+          <p>桌面应用，无法部署到 GitHub Pages</p>
+          <span class="card-tag tag-electron">Electron</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Linux 运维工具 -->
+    <div class="category">
+      <h2 class="category-title">🐧 Linux 运维工具</h2>
+      <div class="grid">
+        <a class="card" href="/projects/docker-manager/">
+          <div class="card-icon">🐳</div>
+          <h3>Docker 管理平台</h3>
+          <p>容器管理（启动/停止/重启/删除），镜像列表，Web 界面</p>
+          <span class="card-tag tag-node">Express + Docker API</span>
+        </a>
+        <div class="card disabled">
+          <div class="card-icon">📡</div>
+          <h3>服务器监控系统</h3>
+          <p>Flask 后端项目，需服务器运行</p>
+          <span class="card-tag tag-python">Python + Flask</span>
+        </div>
+        <div class="card disabled">
+          <div class="card-icon">📋</div>
+          <h3>日志分析平台</h3>
+          <p>Flask 后端项目，需服务器运行</p>
+          <span class="card-tag tag-python">Python + Flask</span>
+        </div>
+        <div class="card disabled">
+          <div class="card-icon">🚀</div>
+          <h3>自动部署工具</h3>
+          <p>Flask 后端项目，需服务器运行</p>
+          <span class="card-tag tag-python">Python + Flask</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 微信小程序 -->
+    <div class="category">
+      <h2 class="category-title">📱 微信小程序</h2>
+      <div class="grid">
+        <div class="card disabled">
+          <div class="card-icon">💰</div>
+          <h3>记账助手</h3>
+          <p>微信小程序，需在微信开发者工具中运行</p>
+          <span class="card-tag tag-mini">微信小程序</span>
+        </div>
+        <div class="card disabled">
+          <div class="card-icon">📝</div>
+          <h3>备忘录</h3>
+          <p>微信小程序，需在微信开发者工具中运行</p>
+          <span class="card-tag tag-mini">微信小程序</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <p>项目资源库 &copy; 2026 · 共 24 个项目 · 18 个可在线预览 · 6 个新增</p>
+  </div>
+</body>
+</html>

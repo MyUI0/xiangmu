@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>贪吃蛇游戏</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .game-container {
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            background: linear-gradient(135deg, #00ff88 0%, #8b5cf6 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 20px;
+        }
+
+        .score-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .score-label {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            color: #00ff88;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        #gameCanvas {
+            border: 3px solid;
+            border-image: linear-gradient(135deg, #00ff88, #8b5cf6, #ec4899) 1;
+            border-radius: 10px;
+            background: #0a0a0f;
+            box-shadow: 0 0 50px rgba(0, 255, 136, 0.3),
+                        inset 0 0 50px rgba(0, 255, 136, 0.1);
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 15, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .overlay.hidden {
+            display: none;
+        }
+
+        .overlay h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            color: #00ff88;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.8);
+        }
+
+        .overlay p {
+            color: #888;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00ff88 0%, #8b5cf6 100%);
+            color: #0a0a0f;
+            font-weight: bold;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(0, 255, 136, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 15px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 12px;
+            color: #00ff88;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .control-btn:hover {
+            background: rgba(0, 255, 136, 0.2);
+            border-color: rgba(0, 255, 136, 0.6);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+
+        .d-pad {
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            grid-template-rows: repeat(3, 60px);
+            gap: 5px;
+            margin-top: 20px;
+        }
+
+        .d-pad .control-btn:nth-child(2) {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        .d-pad .control-btn:nth-child(4) {
+            grid-column: 1;
+            grid-row: 2;
+        }
+
+        .d-pad .control-btn:nth-child(5) {
+            grid-column: 3;
+            grid-row: 2;
+        }
+
+        .d-pad .control-btn:nth-child(6) {
+            grid-column: 2;
+            grid-row: 3;
+        }
+
+        .leaderboard {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .leaderboard h3 {
+            font-family: 'Orbitron', monospace;
+            color: #8b5cf6;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .leaderboard-list {
+            list-style: none;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #ccc;
+        }
+
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+
+        .leaderboard-rank {
+            font-family: 'Orbitron', monospace;
+            color: #00ff88;
+            margin-right: 15px;
+        }
+
+        .leaderboard-score {
+            font-family: 'Orbitron', monospace;
+            color: #ec4899;
+        }
+
+        .game-over-score {
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            color: #ec4899;
+            margin: 20px 0;
+            text-shadow: 0 0 30px rgba(236, 72, 153, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>🐍 贪吃蛇</h1>
+        
+        <div class="score-board">
+            <div class="score-item">
+                <div class="score-label">当前分数</div>
+                <div class="score-value" id="currentScore">0</div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">最高分数</div>
+                <div class="score-value" id="highScore">0</div>
+            </div>
+        </div>
+
+        <div class="canvas-wrapper">
+            <canvas id="gameCanvas" width="400" height="400"></canvas>
+            
+            <div class="overlay" id="startOverlay">
+                <h2>🎮 准备开始</h2>
+                <p>使用方向键或触摸控制移动蛇</p>
+                <p>吃掉食物获得分数，避免撞墙和撞到自己！</p>
+                <button class="btn btn-primary" onclick="startGame()">开始游戏</button>
+            </div>
+
+            <div class="overlay hidden" id="gameOverOverlay">
+                <h2>💥 游戏结束</h2>
+                <p>你的分数</p>
+                <div class="game-over-score" id="finalScore">0</div>
+                <button class="btn btn-primary" onclick="restartGame()">再玩一次</button>
+                <button class="btn btn-secondary" onclick="showLeaderboard()">查看排行榜</button>
+            </div>
+
+            <div class="overlay hidden" id="leaderboardOverlay">
+                <h2>🏆 排行榜</h2>
+                <div class="leaderboard" style="margin-top: 0;">
+                    <ul class="leaderboard-list" id="leaderboardList"></ul>
+                </div>
+                <button class="btn btn-secondary" onclick="closeLeaderboard()">返回</button>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-secondary" onclick="togglePause()" id="pauseBtn">⏸ 暂停</button>
+            <button class="btn btn-secondary" onclick="showLeaderboard()">🏆 排行榜</button>
+        </div>
+
+        <div class="d-pad">
+            <div></div>
+            <button class="control-btn" onclick="changeDirection('up')">↑</button>
+            <div></div>
+            <button class="control-btn" onclick="changeDirection('left')">←</button>
+            <div></div>
+            <button class="control-btn" onclick="changeDirection('right')">→</button>
+            <div></div>
+            <button class="control-btn" onclick="changeDirection('down')">↓</button>
+            <div></div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,25 @@
+2024-01-15 08:30:00 INFO Starting application server on port 8080
+2024-01-15 08:30:01 DEBUG Loading configuration from /etc/app/config.yaml
+2024-01-15 08:30:02 INFO Connected to database at mysql://localhost:3306/appdb
+2024-01-15 08:30:05 INFO Request from 192.168.1.100: GET /api/v1/users
+2024-01-15 08:30:06 DEBUG Processing user authentication for token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+2024-01-15 08:30:07 INFO Request from 10.0.0.55: POST /api/v1/products
+2024-01-15 08:30:08 WARN Slow database query detected (500ms): SELECT * FROM products WHERE category = 'electronics'
+2024-01-15 08:30:10 INFO Request from 192.168.1.100: GET /api/v1/products/123
+2024-01-15 08:30:12 ERROR Failed to send email notification: connection refused to smtp.example.com:587
+2024-01-15 08:30:15 INFO Request from 172.16.0.22: GET /health
+2024-01-15 08:30:20 DEBUG Cache hit for key: product:123
+2024-01-15 08:30:25 WARN Disk usage above 80%: /dev/sda1
+2024-01-15 08:30:30 INFO Request from 192.168.1.100: DELETE /api/v1/sessions/456
+2024-01-15 08:30:32 FATAL Unhandled exception: IndexError: list index out of range
+Traceback (most recent call last):
+  File "/app/server.py", line 234, in handle_request
+    process_data(data[0])
+IndexError: list index out of range
+2024-01-15 08:30:35 INFO Server restarting...
+2024-01-15 08:30:36 INFO Starting application server on port 8080
+2024-01-15 08:30:40 INFO Request from 10.0.0.55: GET /api/v1/orders?status=shipped
+2024-01-15 08:30:45 ERROR 404 Not Found: /api/v1/nonexistent
+2024-01-15 08:30:50 WARN High memory usage detected: 85%
+2024-01-15 08:31:00 INFO Request from 192.168.1.100: POST /api/v1/login
+2024-01-15 08:31:05 ERROR 500 Internal Server Error: database connection timeout

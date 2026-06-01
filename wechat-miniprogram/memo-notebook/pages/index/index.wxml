@@ -1,0 +1,30 @@
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-box">
+    <input class="search-input" placeholder="搜索笔记..." value="{{searchText}}" bindinput="onSearchInput" />
+  </view>
+
+  <!-- 笔记列表 -->
+  <view class="notes-list">
+    <block wx:if="{{filteredNotes.length > 0}}">
+      <view class="note-item" wx:for="{{filteredNotes}}" wx:key="id" bindtap="openNote" data-id="{{item.id}}">
+        <view class="note-header">
+          <text class="note-title">{{item.title}}</text>
+          <text class="note-time">{{item.updateTime}}</text>
+        </view>
+        <view class="note-content">{{item.content}}</view>
+      </view>
+    </block>
+    
+    <!-- 空状态 -->
+    <view class="empty-state" wx:else>
+      <image class="empty-icon" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik0zMCAyNUw3MCAyNUw3MCA3NUwzMCA3NUwzMCAyNVoiIGZpbGw9IiNGRkZGRkYiLz4KPHBhdGggZD0iTTQ1IDM1TDU1IDM1TDU1IDQ1TDQ1IDQ1TDQ1IDM1WiIgZmlsbD0iIzlFOUJBRiIvPgo8cGF0aCBkPSJNMzUgNTVMNjUgNTVMNjUgNjVMMzUgNjVMMzUgNTVaIiBmaWxsPSIjOUU5QkFGIi8+Cjwvc3ZnPg==" mode="aspectFit"></image>
+      <text class="empty-text">{{searchText ? '未找到相关笔记' : '还没有笔记，点击下方按钮添加'}}</text>
+    </view>
+  </view>
+
+  <!-- 浮动添加按钮 -->
+  <view class="add-btn" bindtap="addNote">
+    <text class="add-icon">+</text>
+  </view>
+</view>

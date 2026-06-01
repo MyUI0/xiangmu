@@ -1,0 +1,92 @@
+.container {
+  min-height: 100vh;
+  background-color: #ffffff;
+}
+
+/* 输入区域样式 */
+.input-section {
+  padding: 40rpx 32rpx 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.title-input {
+  font-size: 40rpx;
+  font-weight: 600;
+  color: #333333;
+  line-height: 1.5;
+}
+
+.content-section {
+  padding: 32rpx;
+  flex: 1;
+}
+
+.content-input {
+  font-size: 32rpx;
+  color: #333333;
+  line-height: 1.8;
+  min-height: 400rpx;
+  width: 100%;
+}
+
+/* 操作按钮样式 */
+.action-buttons {
+  padding: 40rpx 32rpx;
+  display: flex;
+  gap: 24rpx;
+}
+
+.btn-save {
+  flex: 1;
+  background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+  color: #ffffff;
+  border-radius: 12rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  padding: 24rpx;
+  border: none;
+}
+
+.btn-save::after {
+  border: none;
+}
+
+.btn-save:active {
+  opacity: 0.8;
+}
+
+.btn-delete {
+  flex: 1;
+  background-color: #ffffff;
+  color: #E74C3C;
+  border: 2rpx solid #E74C3C;
+  border-radius: 12rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  padding: 24rpx;
+}
+
+.btn-delete::after {
+  border: none;
+}
+
+.btn-delete:active {
+  background-color: #fff5f5;
+}
+
+/* 时间信息样式 */
+.time-info {
+  padding: 16rpx 32rpx;
+  display: flex;
+  align-items: center;
+}
+
+.time-label {
+  font-size: 26rpx;
+  color: #999999;
+}
+
+.time-text {
+  font-size: 26rpx;
+  color: #666666;
+}

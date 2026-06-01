@@ -1,0 +1,57 @@
+<!-- 添加记录页面 -->
+<view class="container">
+  <!-- 类型切换 -->
+  <view class="type-tabs">
+    <view class="tab-item {{currentType === 'expense' ? 'active' : ''}}" bindtap="switchType" data-type="expense">
+      <text>支出</text>
+    </view>
+    <view class="tab-item {{currentType === 'income' ? 'active' : ''}}" bindtap="switchType" data-type="income">
+      <text>收入</text>
+    </view>
+  </view>
+
+  <!-- 金额输入 -->
+  <view class="amount-section">
+    <text class="currency">¥</text>
+    <input class="amount-input" type="digit" placeholder="0.00" value="{{amount}}" bindinput="onAmountInput" focus="{{true}}" />
+  </view>
+
+  <!-- 日期选择 -->
+  <view class="date-section" bindtap="showDatePicker">
+    <text class="date-label">日期</text>
+    <view class="date-picker">
+      <text class="date-text">{{dateText}}</text>
+      <text class="date-arrow">›</text>
+    </view>
+    <picker mode="date" value="{{date}}" start="2020-01-01" end="2030-12-31" bindchange="onDateChange"></picker>
+  </view>
+
+  <!-- 分类选择 -->
+  <view class="category-section">
+    <text class="section-label">选择分类</text>
+    <view class="category-grid">
+      <view wx:for="{{categories}}" wx:key="id" 
+            class="category-item {{selectedCategory === item.id ? 'active' : ''}}" 
+            bindtap="selectCategory" 
+            data-id="{{item.id}}">
+        <view class="category-icon-wrapper" style="background-color: {{item.color}}20">
+          <text class="category-emoji">{{item.icon}}</text>
+        </view>
+        <text class="category-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 备注输入 -->
+  <view class="remark-section">
+    <view class="remark-label">备注</view>
+    <input class="remark-input" placeholder="添加备注（可选）" value="{{remark}}" bindinput="onRemarkInput" />
+  </view>
+
+  <!-- 保存按钮 -->
+  <view class="save-section">
+    <button class="save-btn {{canSave ? 'active' : ''}}" bindtap="saveRecord" disabled="{{!canSave}}">
+      保存
+    </button>
+  </view>
+</view>

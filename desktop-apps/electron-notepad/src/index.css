@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+body {
+  @apply bg-white text-slate-900 dark:bg-slate-800 dark:text-slate-100;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* 编辑器样式 */
+.editor-content {
+  min-height: 300px;
+  outline: none;
+  line-height: 1.8;
+}
+
+.editor-content h1 { font-size: 1.5rem; font-weight: 700; margin: 0.5rem 0; }
+.editor-content h2 { font-size: 1.25rem; font-weight: 600; margin: 0.5rem 0; }
+.editor-content blockquote {
+  border-left: 3px solid #6366f1;
+  padding-left: 1rem;
+  margin: 0.5rem 0;
+  opacity: 0.8;
+}
+.editor-content ul, .editor-content ol {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+.dark ::-webkit-scrollbar-thumb { background: #475569; }
+
+/* 查找替换高亮 */
+.find-highlight {
+  background-color: #fef08a;
+  color: inherit;
+  border-radius: 2px;
+  padding: 0 1px;
+}

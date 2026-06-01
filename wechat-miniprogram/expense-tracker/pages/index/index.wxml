@@ -1,0 +1,95 @@
+<!-- 记录列表页面 -->
+<view class="container">
+  <!-- 顶部统计卡片 -->
+  <view class="summary-card">
+    <view class="summary-row">
+      <view class="summary-item">
+        <text class="summary-label">本月支出</text>
+        <text class="summary-value expense">-¥{{monthExpense}}</text>
+      </view>
+      <view class="divider"></view>
+      <view class="summary-item">
+        <text class="summary-label">本月收入</text>
+        <text class="summary-value income">+¥{{monthIncome}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 记录列表 -->
+  <view class="records-section">
+    <view class="section-header">
+      <text class="section-title">记账记录</text>
+    </view>
+    
+    <view wx:if="{{groupedRecords.length === 0}}" class="empty-state">
+      <text class="empty-icon">📝</text>
+      <text class="empty-text">暂无记录，快去记一笔吧</text>
+    </view>
+    
+    <view wx:else>
+      <view wx:for="{{groupedRecords}}" wx:key="date" class="date-group">
+        <view class="date-header">
+          <text class="date-text">{{item.dateText}}</text>
+          <text class="date-balance">{{item.balanceText}}</text>
+        </view>
+        
+        <view class="record-list">
+          <view wx:for="{{item.records}}" wx:for-item="record" wx:key="id" class="record-item" bindtap="showRecordDetail" data-record="{{record}}">
+            <view class="record-left">
+              <view class="category-icon" style="background-color: {{record.categoryInfo.color}}">
+                <text>{{record.categoryInfo.icon}}</text>
+              </view>
+              <view class="record-info">
+                <text class="category-name">{{record.categoryInfo.name}}</text>
+                <text class="record-remark" wx:if="{{record.remark}}">{{record.remark}}</text>
+              </view>
+            </view>
+            <view class="record-right">
+              <text class="record-amount {{record.type}}">{{record.type === 'expense' ? '-' : '+'}}¥{{record.amount}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 记录详情弹窗 -->
+<view wx:if="{{showDetail}}" class="modal-mask" bindtap="hideDetail">
+  <view class="modal-content" catchtap="stopPropagation">
+    <view class="modal-header">
+      <text class="modal-title">记录详情</text>
+      <text class="modal-close" bindtap="hideDetail">✕</text>
+    </view>
+    <view class="modal-body">
+      <view class="detail-row">
+        <text class="detail-label">类型</text>
+        <text class="detail-value">{{currentRecord.type === 'expense' ? '支出' : '收入'}}</text>
+      </view>
+      <view class="detail-row">
+        <text class="detail-label">分类</text>
+        <view class="detail-category">
+          <view class="detail-icon" style="background-color: {{currentRecord.categoryInfo.color}}">
+            {{currentRecord.categoryInfo.icon}}
+          </view>
+          <text>{{currentRecord.categoryInfo.name}}</text>
+        </view>
+      </view>
+      <view class="detail-row">
+        <text class="detail-label">金额</text>
+        <text class="detail-amount {{currentRecord.type}}">{{currentRecord.type === 'expense' ? '-' : '+'}}¥{{currentRecord.amount}}</text>
+      </view>
+      <view class="detail-row" wx:if="{{currentRecord.remark}}">
+        <text class="detail-label">备注</text>
+        <text class="detail-value">{{currentRecord.remark}}</text>
+      </view>
+      <view class="detail-row">
+        <text class="detail-label">时间</text>
+        <text class="detail-value">{{currentRecord.timeText}}</text>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <button class="btn-delete" bindtap="deleteRecord">删除</button>
+    </view>
+  </view>
+</view>

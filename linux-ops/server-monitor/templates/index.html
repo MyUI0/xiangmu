@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux服务器监控系统</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Linux服务器监控系统</h1>
+            <div class="header-info">
+                <span id="hostname">-</span>
+                <span id="update-time">更新中...</span>
+            </div>
+        </header>
+
+        <div class="dashboard">
+            <div class="card">
+                <h3>系统信息</h3>
+                <div class="info-row">
+                    <span class="label">主机名:</span>
+                    <span id="info-hostname">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">IP地址:</span>
+                    <span id="info-ip">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">系统版本:</span>
+                    <span id="info-system">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">运行时间:</span>
+                    <span id="info-uptime">-</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>CPU使用率</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" id="cpu-bar">
+                        <span class="progress-text" id="cpu-text">0%</span>
+                    </div>
+                </div>
+                <div class="details">
+                    <span>核心数: <span id="cpu-cores">-</span></span>
+                    <span>当前频率: <span id="cpu-freq">-</span></span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>内存使用</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" id="memory-bar">
+                        <span class="progress-text" id="memory-text">0%</span>
+                    </div>
+                </div>
+                <div class="details">
+                    <span>已用: <span id="memory-used">-</span></span>
+                    <span>总计: <span id="memory-total">-</span></span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>磁盘使用</h3>
+                <div id="disk-list">
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>网络流量</h3>
+                <div class="network-info">
+                    <div class="network-item">
+                        <span class="network-label">发送:</span>
+                        <span id="network-sent">-</span>
+                    </div>
+                    <div class="network-item">
+                        <span class="network-label">接收:</span>
+                        <span id="network-recv">-</span>
+                    </div>
+                    <div class="network-item">
+                        <span class="network-label">连接数:</span>
+                        <span id="network-conn">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card full-width">
+                <h3>进程列表 (CPU TOP 10)</h3>
+                <table class="process-table">
+                    <thead>
+                        <tr>
+                            <th>PID</th>
+                            <th>进程名</th>
+                            <th>用户</th>
+                            <th>CPU%</th>
+                            <th>内存</th>
+                        </tr>
+                    </thead>
+                    <tbody id="process-list">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

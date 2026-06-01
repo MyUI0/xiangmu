@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自动部署工具</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>自动部署工具</h1>
+            <p>项目部署管理平台</p>
+        </header>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="card">
+                    <h2>部署脚本</h2>
+                    <div id="script-list" class="script-list"></div>
+                </div>
+
+                <div class="card">
+                    <h2>系统配置</h2>
+                    <div id="config-panel">
+                        <div class="form-group">
+                            <label>服务端口</label>
+                            <input type="number" id="config-port" value="5000">
+                        </div>
+                        <div class="form-group">
+                            <label>工作目录</label>
+                            <input type="text" id="config-workspace" value="/tmp/deploy">
+                        </div>
+                        <button class="btn btn-secondary" onclick="saveConfig()">保存配置</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-area">
+                <div class="card">
+                    <h2>部署任务</h2>
+                    <button class="btn btn-primary" onclick="refreshTasks()">刷新任务</button>
+                    <div id="task-list" class="task-list"></div>
+                </div>
+
+                <div class="card">
+                    <h2>任务详情</h2>
+                    <div id="task-detail">
+                        <p>选择一个任务查看详情</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>系统日志</h2>
+                    <div class="log-container">
+                        <pre id="log-content"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

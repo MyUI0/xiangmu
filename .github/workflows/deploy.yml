@@ -1,0 +1,210 @@
+name: Deploy All Projects to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install corepack
+        run: corepack enable
+
+      # ========== 构建首页 ==========
+      - name: Build homepage
+        run: |
+          mkdir -p dist
+          cp docs/index.html dist/index.html
+
+      # ========== 构建 React/Vue 项目 ==========
+      # 1. AI - 语音合成
+      - name: Build speech-synthesis
+        working-directory: ai-projects/speech-synthesis
+        run: |
+          npm ci
+          npx vite build --base /projects/speech-synthesis/
+          mkdir -p $GITHUB_WORKSPACE/dist/projects/speech-synthesis
+          cp -r dist/* $GITHUB_WORKSPACE/dist/projects/speech-synthesis/
+
+      # 2. AI - 图像识别
+      - name: Build image-recognition
+        working-directory: ai-projects/image-recognition
+        run: |
+          npm ci
+          npx vite build --base /projects/image-recognition/
+          mkdir -p $GITHUB_WORKSPACE/dist/projects/image-recognition
+          cp -r dist/* $GITHUB_WORKSPACE/dist/projects/image-recognition/
+
+      # 3. AI - 智能问答界面 🆕
+      - name: Build qa-interface
+        working-directory: ai-projects/qa-interface
+        run: |
+          npm ci
+          npx vite build --base /projects/qa-interface/
+          mkdir -p $GITHUB_WORKSPACE/dist/projects/qa-interface
+          cp -r dist/* $GITHUB_WORKSPACE/dist/projects/qa-interface/
+
+      # 4. AI - 推荐系统界面 🆕
+      - name: Build recommendation-interface
+        working-directory: ai-projects/recommendation-interface
+        run: |
+          npm ci
+          npx vite build --base /projects/recommendation-interface/
+          mkdir -p $GITHUB_WORKSPACE/dist/projects/recommendation-interface
+          cp -r dist/* $GITHUB_WORKSPACE/dist/projects/recommendation-interface/
+
+      # 5. 数据可视化 - 仪表盘
+      - name: Build dashboard
+        working-directory: data-visualization/dashboard
+        run: |
+          npm ci
+          npx vite build --base /projects/dashboard/
+          mkdir -p $GITHUB_WORKSPACE/dist/projects/dashboard
+          cp -r dist/* $GITHUB_WORKSPACE/dist/projects/dashboard/
+
+      # 6. 数据可视化 - 实时数据监控 🆕
+      - name: Build real-time-monitor
+        working-directory: data-visualization/real-time-monitor
+        run: |
+          npm ci
+          npx vite build --base /projects/real-time-monitor/
+          mkdir -p $GITHUB_WORKSPACE/dist/projects/real-time-monitor
+          cp -r dist/* $GITHUB_WORKSPACE/dist/projects/real-time-monitor/
+
+      # 7. UI - React 组件库
+      - name: Build react-components
+        working-directory: ui-libs/react-components
+        run: |
+          npm ci
+          npx vite build --base /projects/react-components/
+          mkdir -p $GITHUB_WORKSPACE/dist/projects/react-components
+          cp -r dist/* $GITHUB_WORKSPACE/dist/projects/react-components/
+
+      # 8. UI - Vue 组件库 (pnpm)
+      - name: Build vue-components
+        working-directory: ui-libs/vue-components
+        run: |
+          pnpm install --frozen-lockfile
+          npx vite build --base /projects/vue-components/
+          mkdir -p $GITHUB_WORKSPACE/dist/projects/vue-components
+          cp -r dist/* $GITHUB_WORKSPACE/dist/projects/vue-components/
+
+      # 9. 前端 - 博客管理后台（仅前端）
+      - name: Build blog-dashboard
+        working-directory: web-frontend/blog-dashboard/frontend
+        run: |
+          npm ci
+          npx vite build --base /projects/blog-dashboard/
+          mkdir -p $GITHUB_WORKSPACE/dist/projects/blog-dashboard
+          cp -r dist/* $GITHUB_WORKSPACE/dist/projects/blog-dashboard/
+
+      # 10. 前端 - 电商平台
+      - name: Build e-commerce
+        working-directory: web-frontend/e-commerce
+        run: |
+          npm ci
+          npx vite build --base /projects/e-commerce/
+          mkdir -p $GITHUB_WORKSPACE/dist/projects/e-commerce
+          cp -r dist/* $GITHUB_WORKSPACE/dist/projects/e-commerce/
+
+      # 11. 前端 - 天气应用 (pnpm)
+      - name: Build weather-app
+        working-directory: web-frontend/weather-app
+        run: |
+          pnpm install --frozen-lockfile
+          npx vite build --base /projects/weather-app/
+          mkdir -p $GITHUB_WORKSPACE/dist/projects/weather-app
+          cp -r dist/* $GITHUB_WORKSPACE/dist/projects/weather-app/
+
+      # 12. 前端 - 任务管理器 🆕
+      - name: Build task-manager
+        working-directory: web-frontend/task-manager
+        run: |
+          npm ci
+          npx vite build --base /projects/task-manager/
+          mkdir -p $GITHUB_WORKSPACE/dist/projects/task-manager
+          cp -r dist/* $GITHUB_WORKSPACE/dist/projects/task-manager/
+
+      # 13. 游戏 - 2048 🆕
+      - name: Build 2048-game
+        working-directory: games/2048-game
+        run: |
+          npm ci
+          npx vite build --base /projects/2048-game/
+          mkdir -p $GITHUB_WORKSPACE/dist/projects/2048-game
+          cp -r dist/* $GITHUB_WORKSPACE/dist/projects/2048-game/
+
+      # 14. 桌面 - 记事本（Web版）🆕
+      - name: Build electron-notepad
+        working-directory: desktop-apps/electron-notepad
+        run: |
+          npm ci
+          npx vite build --base /projects/notepad/
+          mkdir -p $GITHUB_WORKSPACE/dist/projects/notepad
+          cp -r dist/* $GITHUB_WORKSPACE/dist/projects/notepad/
+
+      # ========== 复制纯静态项目 ==========
+      # 15. 前端 - 个人作品集
+      - name: Copy portfolio
+        run: |
+          mkdir -p dist/projects/portfolio
+          cp -r web-frontend/portfolio/* dist/projects/portfolio/
+
+      # 16. 前端 - Pretext 演示
+      - name: Copy pretext-demo
+        run: |
+          mkdir -p dist/projects/pretext-demo
+          cp -r web-frontend/pretext-demo/* dist/projects/pretext-demo/
+
+      # 17. 游戏 - 贪吃蛇
+      - name: Copy snake-game
+        run: |
+          mkdir -p dist/projects/snake-game
+          cp -r games/snake-game/* dist/projects/snake-game/
+
+      # 18. 运维 - Docker 管理前端（仅展示）
+      - name: Copy docker-manager-frontend
+        run: |
+          mkdir -p dist/projects/docker-manager
+          cp -r linux-ops/docker-manager/frontend/* dist/projects/docker-manager/
+
+      # ========== 上传 Pages 制品 ==========
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
