@@ -194,14 +194,6 @@ jobs:
           mkdir -p $GITHUB_WORKSPACE/dist/projects/vue-components
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/vue-components/
 
-      - name: Build blog-dashboard
-        working-directory: web-frontend/blog-dashboard/frontend
-        run: |
-          npm install
-          npx vite build --base ./
-          mkdir -p $GITHUB_WORKSPACE/dist/projects/blog-dashboard
-          cp -r dist/* $GITHUB_WORKSPACE/dist/projects/blog-dashboard/
-
       - name: Build e-commerce
         working-directory: web-frontend/e-commerce
         run: |
