@@ -39,7 +39,6 @@ jobs:
         run: |
           echo "🔧 修复 Tailwind CSS 配置..."
           
-          # 定义需要处理的项目列表
           PROJECTS=(
             "ai-projects/qa-interface"
             "ai-projects/recommendation-interface"
@@ -61,57 +60,47 @@ jobs:
             if [ -d "$project" ]; then
               echo "📁 处理项目: $project"
               
-              # 1. 修复 package.json - 将 tailwindcss 4 改为 3.4
               if [ -f "$project/package.json" ]; then
                 sed -i 's/"tailwindcss": "\^4\.0\.0"/"tailwindcss": "^3.4.0"/g' "$project/package.json"
                 sed -i 's/"tailwindcss": "\^4\.[0-9]\+\.[0-9]\+"/"tailwindcss": "^3.4.0"/g' "$project/package.json"
                 echo "  ✓ 更新 package.json"
               fi
               
-              # 2. 创建 tailwind.config.js（如果不存在）
               if [ ! -f "$project/tailwind.config.js" ] && [ -f "$project/package.json" ]; then
-                cat > "$project/tailwind.config.js" << 'EOF'
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-}
-EOF
+                echo '/** @type {import('"'"'tailwindcss'"'"').Config} */' > "$project/tailwind.config.js"
+                echo 'export default {' >> "$project/tailwind.config.js"
+                echo '  content: [' >> "$project/tailwind.config.js"
+                echo '    "./index.html",' >> "$project/tailwind.config.js"
+                echo '    "./src/**/*.{js,ts,jsx,tsx}",' >> "$project/tailwind.config.js"
+                echo '  ],' >> "$project/tailwind.config.js"
+                echo '  theme: {' >> "$project/tailwind.config.js"
+                echo '    extend: {},' >> "$project/tailwind.config.js"
+                echo '  },' >> "$project/tailwind.config.js"
+                echo '  plugins: [],' >> "$project/tailwind.config.js"
+                echo '}' >> "$project/tailwind.config.js"
                 echo "  ✓ 创建 tailwind.config.js"
               fi
               
-              # 3. 修复 src/index.css
               if [ -f "$project/src/index.css" ]; then
                 if grep -q '@import "tailwindcss"' "$project/src/index.css"; then
-                  cat > "$project/src/index.css" << 'EOF'
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-EOF
+                  echo '@tailwind base;' > "$project/src/index.css"
+                  echo '@tailwind components;' >> "$project/src/index.css"
+                  echo '@tailwind utilities;' >> "$project/src/index.css"
+                  echo '' >> "$project/src/index.css"
+                  echo 'body {' >> "$project/src/index.css"
+                  echo "  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;" >> "$project/src/index.css"
+                  echo '}' >> "$project/src/index.css"
                   echo "  ✓ 更新 src/index.css"
                 fi
               fi
               
-              # 4. 确保 postcss.config.js 正确
               if [ -f "$project/postcss.config.js" ]; then
-                cat > "$project/postcss.config.js" << 'EOF'
-export default {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
-}
-EOF
+                echo 'export default {' > "$project/postcss.config.js"
+                echo '  plugins: {' >> "$project/postcss.config.js"
+                echo '    tailwindcss: {},' >> "$project/postcss.config.js"
+                echo '    autoprefixer: {},' >> "$project/postcss.config.js"
+                echo '  },' >> "$project/postcss.config.js"
+                echo '}' >> "$project/postcss.config.js"
                 echo "  ✓ 更新 postcss.config.js"
               fi
             fi
@@ -126,7 +115,6 @@ EOF
           cp docs/index.html dist/index.html
 
       # ========== 构建 React/Vue 项目 ==========
-      # 1. AI - 语音合成
       - name: Build speech-synthesis
         working-directory: ai-projects/speech-synthesis
         run: |
@@ -135,7 +123,6 @@ EOF
           mkdir -p $GITHUB_WORKSPACE/dist/projects/speech-synthesis
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/speech-synthesis/
 
-      # 2. AI - 图像识别
       - name: Build image-recognition
         working-directory: ai-projects/image-recognition
         run: |
@@ -144,7 +131,6 @@ EOF
           mkdir -p $GITHUB_WORKSPACE/dist/projects/image-recognition
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/image-recognition/
 
-      # 3. AI - 智能问答界面
       - name: Build qa-interface
         working-directory: ai-projects/qa-interface
         run: |
@@ -153,7 +139,6 @@ EOF
           mkdir -p $GITHUB_WORKSPACE/dist/projects/qa-interface
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/qa-interface/
 
-      # 4. AI - 推荐系统界面
       - name: Build recommendation-interface
         working-directory: ai-projects/recommendation-interface
         run: |
@@ -162,7 +147,6 @@ EOF
           mkdir -p $GITHUB_WORKSPACE/dist/projects/recommendation-interface
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/recommendation-interface/
 
-      # 5. 数据可视化 - 仪表盘
       - name: Build dashboard
         working-directory: data-visualization/dashboard
         run: |
@@ -171,7 +155,6 @@ EOF
           mkdir -p $GITHUB_WORKSPACE/dist/projects/dashboard
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/dashboard/
 
-      # 6. 数据可视化 - 实时数据监控
       - name: Build real-time-monitor
         working-directory: data-visualization/real-time-monitor
         run: |
@@ -180,7 +163,6 @@ EOF
           mkdir -p $GITHUB_WORKSPACE/dist/projects/real-time-monitor
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/real-time-monitor/
 
-      # 7. UI - React 组件库
       - name: Build react-components
         working-directory: ui-libs/react-components
         run: |
@@ -189,7 +171,6 @@ EOF
           mkdir -p $GITHUB_WORKSPACE/dist/projects/react-components
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/react-components/
 
-      # 8. UI - Vue 组件库 (pnpm)
       - name: Build vue-components
         working-directory: ui-libs/vue-components
         run: |
@@ -198,7 +179,6 @@ EOF
           mkdir -p $GITHUB_WORKSPACE/dist/projects/vue-components
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/vue-components/
 
-      # 9. 前端 - 博客管理后台（仅前端）
       - name: Build blog-dashboard
         working-directory: web-frontend/blog-dashboard/frontend
         run: |
@@ -207,7 +187,6 @@ EOF
           mkdir -p $GITHUB_WORKSPACE/dist/projects/blog-dashboard
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/blog-dashboard/
 
-      # 10. 前端 - 电商平台
       - name: Build e-commerce
         working-directory: web-frontend/e-commerce
         run: |
@@ -216,7 +195,6 @@ EOF
           mkdir -p $GITHUB_WORKSPACE/dist/projects/e-commerce
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/e-commerce/
 
-      # 11. 前端 - 天气应用 (pnpm)
       - name: Build weather-app
         working-directory: web-frontend/weather-app
         run: |
@@ -225,7 +203,6 @@ EOF
           mkdir -p $GITHUB_WORKSPACE/dist/projects/weather-app
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/weather-app/
 
-      # 12. 前端 - 任务管理器
       - name: Build task-manager
         working-directory: web-frontend/task-manager
         run: |
@@ -234,7 +211,6 @@ EOF
           mkdir -p $GITHUB_WORKSPACE/dist/projects/task-manager
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/task-manager/
 
-      # 13. 游戏 - 2048
       - name: Build 2048-game
         working-directory: games/2048-game
         run: |
@@ -243,7 +219,6 @@ EOF
           mkdir -p $GITHUB_WORKSPACE/dist/projects/2048-game
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/2048-game/
 
-      # 14. 桌面 - 记事本（Web版）
       - name: Build electron-notepad
         working-directory: desktop-apps/electron-notepad
         run: |
@@ -253,25 +228,21 @@ EOF
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/notepad/
 
       # ========== 复制纯静态项目 ==========
-      # 15. 前端 - 个人作品集
       - name: Copy portfolio
         run: |
           mkdir -p dist/projects/portfolio
           cp -r web-frontend/portfolio/* dist/projects/portfolio/
 
-      # 16. 前端 - Pretext 演示
       - name: Copy pretext-demo
         run: |
           mkdir -p dist/projects/pretext-demo
           cp -r web-frontend/pretext-demo/* dist/projects/pretext-demo/
 
-      # 17. 游戏 - 贪吃蛇
       - name: Copy snake-game
         run: |
           mkdir -p dist/projects/snake-game
           cp -r games/snake-game/* dist/projects/snake-game/
 
-      # 18. 运维 - Docker 管理前端（仅展示）
       - name: Copy docker-manager-frontend
         run: |
           mkdir -p dist/projects/docker-manager
