@@ -48,7 +48,6 @@ jobs:
             "data-visualization/real-time-monitor"
             "ui-libs/react-components"
             "ui-libs/vue-components"
-            "web-frontend/blog-dashboard/frontend"
             "web-frontend/e-commerce"
             "web-frontend/weather-app"
             "web-frontend/task-manager"
@@ -127,12 +126,12 @@ jobs:
           cp docs/index.html dist/index.html
           echo "✅ 首页已复制"
 
-      # ========== 构建 React/Vue 项目 ==========
+      # ========== 构建 React/Vue 项目（使用正确的 base 路径）==========
       - name: Build speech-synthesis
         working-directory: ai-projects/speech-synthesis
         run: |
           npm install
-          npx vite build --base ./
+          npx vite build --base /xiangmu/projects/speech-synthesis/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/speech-synthesis
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/speech-synthesis/
 
@@ -140,7 +139,7 @@ jobs:
         working-directory: ai-projects/image-recognition
         run: |
           npm install
-          npx vite build --base ./
+          npx vite build --base /xiangmu/projects/image-recognition/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/image-recognition
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/image-recognition/
 
@@ -148,7 +147,7 @@ jobs:
         working-directory: ai-projects/qa-interface
         run: |
           npm install
-          npx vite build --base ./
+          npx vite build --base /xiangmu/projects/qa-interface/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/qa-interface
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/qa-interface/
 
@@ -156,7 +155,7 @@ jobs:
         working-directory: ai-projects/recommendation-interface
         run: |
           npm install
-          npx vite build --base ./
+          npx vite build --base /xiangmu/projects/recommendation-interface/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/recommendation-interface
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/recommendation-interface/
 
@@ -164,7 +163,7 @@ jobs:
         working-directory: data-visualization/dashboard
         run: |
           npm install
-          npx vite build --base ./
+          npx vite build --base /xiangmu/projects/dashboard/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/dashboard
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/dashboard/
 
@@ -172,7 +171,7 @@ jobs:
         working-directory: data-visualization/real-time-monitor
         run: |
           npm install
-          npx vite build --base ./
+          npx vite build --base /xiangmu/projects/real-time-monitor/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/real-time-monitor
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/real-time-monitor/
 
@@ -180,7 +179,7 @@ jobs:
         working-directory: ui-libs/react-components
         run: |
           npm install
-          npx vite build --base ./
+          npx vite build --base /xiangmu/projects/react-components/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/react-components
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/react-components/
 
@@ -190,7 +189,7 @@ jobs:
           rm -f pnpm-lock.yaml
           rm -rf node_modules
           pnpm install
-          npx vite build --base ./
+          npx vite build --base /xiangmu/projects/vue-components/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/vue-components
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/vue-components/
 
@@ -198,7 +197,7 @@ jobs:
         working-directory: web-frontend/e-commerce
         run: |
           npm install
-          npx vite build --base ./
+          npx vite build --base /xiangmu/projects/e-commerce/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/e-commerce
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/e-commerce/
 
@@ -208,7 +207,7 @@ jobs:
           rm -f pnpm-lock.yaml
           rm -rf node_modules
           pnpm install
-          npx vite build --base ./
+          npx vite build --base /xiangmu/projects/weather-app/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/weather-app
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/weather-app/
 
@@ -216,7 +215,7 @@ jobs:
         working-directory: web-frontend/task-manager
         run: |
           npm install
-          npx vite build --base ./
+          npx vite build --base /xiangmu/projects/task-manager/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/task-manager
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/task-manager/
 
@@ -224,7 +223,7 @@ jobs:
         working-directory: games/2048-game
         run: |
           npm install
-          npx vite build --base ./
+          npx vite build --base /xiangmu/projects/2048-game/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/2048-game
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/2048-game/
 
@@ -232,7 +231,7 @@ jobs:
         working-directory: desktop-apps/electron-notepad
         run: |
           npm install
-          npx vite build --base ./
+          npx vite build --base /xiangmu/projects/notepad/
           mkdir -p $GITHUB_WORKSPACE/dist/projects/notepad
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/notepad/
 
@@ -271,9 +270,6 @@ jobs:
               echo "  ✗ $dir/index.html 缺失"
             fi
           done
-          echo ""
-          echo "🔍 检查 speech-synthesis 的 index.html 内容:"
-          cat dist/projects/speech-synthesis/index.html | head -20 || echo "文件不存在"
 
       # ========== 上传 Pages 制品 ==========
       - name: Upload artifact
