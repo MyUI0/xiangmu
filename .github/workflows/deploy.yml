@@ -34,6 +34,91 @@ jobs:
       - name: Install corepack
         run: corepack enable
 
+      # ========== 修复 Tailwind CSS 配置 ==========
+      - name: Fix Tailwind CSS Configuration
+        run: |
+          echo "🔧 修复 Tailwind CSS 配置..."
+          
+          # 定义需要处理的项目列表
+          PROJECTS=(
+            "ai-projects/qa-interface"
+            "ai-projects/recommendation-interface"
+            "ai-projects/image-recognition"
+            "ai-projects/speech-synthesis"
+            "data-visualization/dashboard"
+            "data-visualization/real-time-monitor"
+            "ui-libs/react-components"
+            "ui-libs/vue-components"
+            "web-frontend/blog-dashboard/frontend"
+            "web-frontend/e-commerce"
+            "web-frontend/weather-app"
+            "web-frontend/task-manager"
+            "games/2048-game"
+            "desktop-apps/electron-notepad"
+          )
+          
+          for project in "${PROJECTS[@]}"; do
+            if [ -d "$project" ]; then
+              echo "📁 处理项目: $project"
+              
+              # 1. 修复 package.json - 将 tailwindcss 4 改为 3.4
+              if [ -f "$project/package.json" ]; then
+                sed -i 's/"tailwindcss": "\^4\.0\.0"/"tailwindcss": "^3.4.0"/g' "$project/package.json"
+                sed -i 's/"tailwindcss": "\^4\.[0-9]\+\.[0-9]\+"/"tailwindcss": "^3.4.0"/g' "$project/package.json"
+                echo "  ✓ 更新 package.json"
+              fi
+              
+              # 2. 创建 tailwind.config.js（如果不存在）
+              if [ ! -f "$project/tailwind.config.js" ] && [ -f "$project/package.json" ]; then
+                cat > "$project/tailwind.config.js" << 'EOF'
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+EOF
+                echo "  ✓ 创建 tailwind.config.js"
+              fi
+              
+              # 3. 修复 src/index.css
+              if [ -f "$project/src/index.css" ]; then
+                if grep -q '@import "tailwindcss"' "$project/src/index.css"; then
+                  cat > "$project/src/index.css" << 'EOF'
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+EOF
+                  echo "  ✓ 更新 src/index.css"
+                fi
+              fi
+              
+              # 4. 确保 postcss.config.js 正确
+              if [ -f "$project/postcss.config.js" ]; then
+                cat > "$project/postcss.config.js" << 'EOF'
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+EOF
+                echo "  ✓ 更新 postcss.config.js"
+              fi
+            fi
+          done
+          
+          echo "✅ Tailwind CSS 配置修复完成！"
+
       # ========== 构建首页 ==========
       - name: Build homepage
         run: |
@@ -59,7 +144,7 @@ jobs:
           mkdir -p $GITHUB_WORKSPACE/dist/projects/image-recognition
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/image-recognition/
 
-      # 3. AI - 智能问答界面 🆕
+      # 3. AI - 智能问答界面
       - name: Build qa-interface
         working-directory: ai-projects/qa-interface
         run: |
@@ -68,7 +153,7 @@ jobs:
           mkdir -p $GITHUB_WORKSPACE/dist/projects/qa-interface
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/qa-interface/
 
-      # 4. AI - 推荐系统界面 🆕
+      # 4. AI - 推荐系统界面
       - name: Build recommendation-interface
         working-directory: ai-projects/recommendation-interface
         run: |
@@ -86,7 +171,7 @@ jobs:
           mkdir -p $GITHUB_WORKSPACE/dist/projects/dashboard
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/dashboard/
 
-      # 6. 数据可视化 - 实时数据监控 🆕
+      # 6. 数据可视化 - 实时数据监控
       - name: Build real-time-monitor
         working-directory: data-visualization/real-time-monitor
         run: |
@@ -140,7 +225,7 @@ jobs:
           mkdir -p $GITHUB_WORKSPACE/dist/projects/weather-app
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/weather-app/
 
-      # 12. 前端 - 任务管理器 🆕
+      # 12. 前端 - 任务管理器
       - name: Build task-manager
         working-directory: web-frontend/task-manager
         run: |
@@ -149,7 +234,7 @@ jobs:
           mkdir -p $GITHUB_WORKSPACE/dist/projects/task-manager
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/task-manager/
 
-      # 13. 游戏 - 2048 🆕
+      # 13. 游戏 - 2048
       - name: Build 2048-game
         working-directory: games/2048-game
         run: |
@@ -158,7 +243,7 @@ jobs:
           mkdir -p $GITHUB_WORKSPACE/dist/projects/2048-game
           cp -r dist/* $GITHUB_WORKSPACE/dist/projects/2048-game/
 
-      # 14. 桌面 - 记事本（Web版）🆕
+      # 14. 桌面 - 记事本（Web版）
       - name: Build electron-notepad
         working-directory: desktop-apps/electron-notepad
         run: |
