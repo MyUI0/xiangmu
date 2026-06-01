@@ -66,7 +66,6 @@ jobs:
                 echo "  ✓ 更新 package.json"
               fi
               
-              # 删除旧的 lock 文件，让 npm install 重新生成
               if [ -f "$project/package-lock.json" ]; then
                 rm "$project/package-lock.json"
                 echo "  ✓ 删除旧 package-lock.json"
@@ -117,6 +116,65 @@ jobs:
           done
           
           echo "✅ Tailwind CSS 配置修复完成！"
+
+      # ========== 修复 blog-dashboard 类型定义 ==========
+      - name: Fix blog-dashboard types
+        run: |
+          echo "🔧 修复 blog-dashboard 类型定义..."
+          
+          TYPES_FILE="web-frontend/blog-dashboard/frontend/src/types/index.ts"
+          
+          if [ -f "$TYPES_FILE" ]; then
+            # 检查是否缺少 Article 类型
+            if ! grep -q "export interface Article" "$TYPES_FILE"; then
+              echo "" >> "$TYPES_FILE"
+              echo "export interface Article {" >> "$TYPES_FILE"
+              echo "  id: string;" >> "$TYPES_FILE"
+              echo "  title: string;" >> "$TYPES_FILE"
+              echo "  content: string;" >> "$TYPES_FILE"
+              echo "  category: string;" >> "$TYPES_FILE"
+              echo "  status: 'draft' | 'published';" >> "$TYPES_FILE"
+              echo "  createdAt: string;" >> "$TYPES_FILE"
+              echo "  updatedAt: string;" >> "$TYPES_FILE"
+              echo "  views: number;" >> "$TYPES_FILE"
+              echo "  likes: number;" >> "$TYPES_FILE"
+              echo "}" >> "$TYPES_FILE"
+              echo "  ✓ 添加 Article 类型"
+            fi
+            
+            if ! grep -q "export interface Statistics" "$TYPES_FILE"; then
+              echo "" >> "$TYPES_FILE"
+              echo "export interface Statistics {" >> "$TYPES_FILE"
+              echo "  totalArticles: number;" >> "$TYPES_FILE"
+              echo "  publishedArticles: number;" >> "$TYPES_FILE"
+              echo "  draftArticles: number;" >> "$TYPES_FILE"
+              echo "  totalViews: number;" >> "$TYPES_FILE"
+              echo "  totalLikes: number;" >> "$TYPES_FILE"
+              echo "}" >> "$TYPES_FILE"
+              echo "  ✓ 添加 Statistics 类型"
+            fi
+            
+            if ! grep -q "export interface TrendData" "$TYPES_FILE"; then
+              echo "" >> "$TYPES_FILE"
+              echo "export interface TrendData {" >> "$TYPES_FILE"
+              echo "  date: string;" >> "$TYPES_FILE"
+              echo "  views: number;" >> "$TYPES_FILE"
+              echo "  likes: number;" >> "$TYPES_FILE"
+              echo "}" >> "$TYPES_FILE"
+              echo "  ✓ 添加 TrendData 类型"
+            fi
+            
+            if ! grep -q "export interface CategoryData" "$TYPES_FILE"; then
+              echo "" >> "$TYPES_FILE"
+              echo "export interface CategoryData {" >> "$TYPES_FILE"
+              echo "  name: string;" >> "$TYPES_FILE"
+              echo "  count: number;" >> "$TYPES_FILE"
+              echo "}" >> "$TYPES_FILE"
+              echo "  ✓ 添加 CategoryData 类型"
+            fi
+            
+            echo "✅ blog-dashboard 类型定义修复完成！"
+          fi
 
       # ========== 构建首页 ==========
       - name: Build homepage
